@@ -76,6 +76,11 @@ join_room ws, "c1089644-cc15-4204-8935-336b5a7fa83c"
 #   end
 # end
 
-send_message ws, "I AM ALIVE!!!!!!!!"
+spawn do
+  STDIN.each_line do |l|
+    send_message ws, l
+  end
+end
+
 
 ws.run
