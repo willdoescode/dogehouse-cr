@@ -51,17 +51,22 @@ def format(s : String)
 end
 
 ws.on_message do |msg|
+  if msg == "pong"
+    on_pong
+    next
+  end
+
   puts msg
+end
+
+def on_pong
+  puts "Recieved pong"
 end
 
 ws.on_close do |code|
   puts "Connection closed: #{code}"
   exit 1
 end 
-
-ws.on_ping do
-  puts "Received ping"
-end
 
 # Send pings
 spawn do
@@ -72,7 +77,7 @@ spawn do
 end
 
 auth ws, ENV["ACCESS_TOKEN"], ENV["REFRESH_TOKEN"]
-join_room ws, "c1089644-cc15-4204-8935-336b5a7fa83c"
+join_room ws, "173b9527-4c5f-4c89-9a53-adf7ffd376b1"
 
 # spawn do
 #   sleep 1
