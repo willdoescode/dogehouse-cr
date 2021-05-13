@@ -35,9 +35,15 @@ def auth(socket : HTTP::WebSocket, token : String, refreshToken : String)
 end
 
 def send_message(socket : HTTP::WebSocket, s : String)
-  j = {"op" => "chat:send_msg", "d" => {"tokens": format(s)}, "v" => "0.2.0"}.to_json
-  puts j
-  socket.send j
+  socket.send(
+    {
+      "op" => "chat:send_msg",
+       "d" => {
+         "tokens": format(s)
+       },
+       "v" => "0.2.0"
+    }.to_json
+  )
 end
 
 def format(s : String)

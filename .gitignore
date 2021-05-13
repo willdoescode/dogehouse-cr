@@ -1,2 +1,4 @@
 setupenv.fish
 .env
+client
+client.dwarf
