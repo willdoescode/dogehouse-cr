@@ -34,6 +34,16 @@ def auth(socket : HTTP::WebSocket, token : String, refreshToken : String)
   )
 end
 
+def send_message(socket : HTTP::WebSocket, s : String)
+  j = {"op" => "chat:send_msg", "d" => {"tokens": format(s)}, "v" => "0.2.0"}.to_json
+  puts j
+  socket.send j
+end
+
+def format(s : String)
+  s.split(" ").map {|x| {"type" => "text", "value" => x}}
+end
+
 ws.on_message do |msg|
   puts msg
 end
@@ -57,5 +67,15 @@ end
 
 auth ws, ENV["ACCESS_TOKEN"], ENV["REFRESH_TOKEN"]
 join_room ws, "c1089644-cc15-4204-8935-336b5a7fa83c"
+
+# spawn do
+#   sleep 1
+#   10.times do |i|
+#   send_message ws, "This is message #{i}/10"
+#   sleep 1
+#   end
+# end
+
+send_message ws, "I AM ALIVE!!!!!!!!"
 
 ws.run
